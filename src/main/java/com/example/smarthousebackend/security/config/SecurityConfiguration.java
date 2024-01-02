@@ -38,8 +38,8 @@ public class SecurityConfiguration{
                     .authorizeHttpRequests(auth->{
                         auth
                                 //.requestMatchers("/admin/**").hasAuthority("ADMIN")
-                                //.requestMatchers("/api/auth/**").permitAll()
-                                .anyRequest().permitAll();
+                                .requestMatchers("/api/auth/**").permitAll()
+                                .anyRequest().authenticated();
 
                     })
                     .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

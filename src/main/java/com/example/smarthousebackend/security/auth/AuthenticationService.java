@@ -32,7 +32,7 @@ public class AuthenticationService {
         return register(request, Role.USER);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public AuthenticationResponse registerAdmin(RegisterRequest request) {
         return register(request, Role.ADMIN);
     }
