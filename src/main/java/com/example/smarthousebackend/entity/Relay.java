@@ -18,21 +18,23 @@ public class Relay{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer lamp;
-
     private Integer switch1;
 
     private Integer switch2;
 
-    private Integer alarm;
+    private Integer switch3;
+
+    private Integer switch4;
 
     private Integer humidifier;
 
-    private Integer heating;
+    private Integer alarm;
 
     private Integer airflow;
 
     private Integer pump;
+
+    private Integer heating;
 
     private Date localDate;
 

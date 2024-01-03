@@ -27,28 +27,31 @@ public class RelayServiceImpl implements RelayService {
     public void clickButton(Integer device, Integer val) {
         switch (device){
             case 0:
-                firebase.lamp(val);
-                break;
-            case 1:
                 firebase.switch1(val);
                 break;
-            case 2:
+            case 1:
                 firebase.switch2(val);
                 break;
+            case 2:
+                firebase.switch3(val);
+                break;
             case 3:
-                firebase.alarm(val);
+                firebase.switch4(val);
                 break;
             case 4:
                 firebase.humidifier(val);
                 break;
             case 5:
-                firebase.heating(val);
+                firebase.alarm(val);
                 break;
             case 6:
                 firebase.airflow(val);
                 break;
             case 7:
                 firebase.pump(val);
+                break;
+            case 8:
+                firebase.heating(val);
                 break;
             default:
                 break;

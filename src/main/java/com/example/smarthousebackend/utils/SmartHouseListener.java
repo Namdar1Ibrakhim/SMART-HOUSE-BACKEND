@@ -2,6 +2,7 @@ package com.example.smarthousebackend.utils;
 
 import com.example.smarthousebackend.entity.SmartHouse;
 import com.example.smarthousebackend.entity.SmartHouseList;
+import com.example.smarthousebackend.repository.RelayRepository;
 import com.example.smarthousebackend.repository.SmartHouseListRepository;
 import com.example.smarthousebackend.repository.SmartHouseRepository;
 import com.example.smarthousebackend.repository.SoilListRepository;
@@ -20,6 +21,7 @@ public class SmartHouseListener {
     private final SmartHouseListRepository smartHouseListRepository;
     private final SmartHouseRepository smartHouseRepository;
     private final SoilListRepository soilListRepository;
+    private final RelayRepository relayRepository;
 
     @Scheduled(fixedRate = 20000)
     public void postUpdate() {
@@ -51,7 +53,8 @@ public class SmartHouseListener {
             // Добавим условие для удаления старых данных, если их количество превышает 1000
             long smartHouseRowCount = smartHouseListRepository.count();
             long soilRowCount = soilListRepository.count();
-            int maxRowCount = 1000;
+            long relayRowCount = relayRepository.count();
+            int maxRowCount = 10;
 
             if (smartHouseRowCount > maxRowCount) {
                 // Определяем количество записей, которые нужно удалить
@@ -65,6 +68,13 @@ public class SmartHouseListener {
 
                 // Удаляем старые записи
                 soilListRepository.deleteOldestRecords(deleteCount);
+            }
+            if(relayRowCount > maxRowCount){
+                int deleteCount = (int) (relayRowCount - maxRowCount);
+
+                // Удаляем старые записи
+                log.info("**********************************");
+                relayRepository.deleteOldestRecords(deleteCount);
             }
 
 
