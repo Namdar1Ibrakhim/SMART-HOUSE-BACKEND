@@ -54,7 +54,7 @@ public class SmartHouseListener {
             long smartHouseRowCount = smartHouseListRepository.count();
             long soilRowCount = soilListRepository.count();
             long relayRowCount = relayRepository.count();
-            int maxRowCount = 10;
+            int maxRowCount = 1000;
 
             if (smartHouseRowCount > maxRowCount) {
                 // Определяем количество записей, которые нужно удалить

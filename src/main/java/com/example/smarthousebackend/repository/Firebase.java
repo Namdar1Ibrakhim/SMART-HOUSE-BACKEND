@@ -37,18 +37,42 @@ public class Firebase {
 
     public void editSettings(SettingsDto settings){
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("Settings");
-        database.child("humidity").child("max").setValueAsync(settings.getMaxHumidity());
-        database.child("humidity").child("avg").setValueAsync(settings.getAvgHumidity());
-        database.child("humidity").child("min").setValueAsync(settings.getMinHumidity());
-        database.child("temperature").child("max").setValueAsync(settings.getMaxTemperature());
-        database.child("temperature").child("avg").setValueAsync(settings.getAvgTemperature());
-        database.child("temperature").child("min").setValueAsync(settings.getMinTemperature());
-        database.child("soil_moisture").child("avg").setValueAsync(settings.getAvgSoilMoisture());
-        database.child("soil_moisture").child("min").setValueAsync(settings.getMinSoilMoisture());
-        database.child("time").child("start").setValueAsync(settings.getStartTime());
-        database.child("time").child("stop").setValueAsync(settings.getStopTime());
-        database.child("mode").setValueAsync(settings.getMode());
-        database.child("security").setValueAsync(settings.getSecurity());
+        if(settings.getMaxHumidity()!=null) {
+            database.child("humidity").child("max").setValueAsync(settings.getMaxHumidity());
+        }
+        if(settings.getAvgHumidity()!=null) {
+            database.child("humidity").child("avg").setValueAsync(settings.getAvgHumidity());
+        }
+        if(settings.getMinHumidity()!=null) {
+            database.child("humidity").child("min").setValueAsync(settings.getMinHumidity());
+        }
+        if(settings.getMaxTemperature()!=null) {
+            database.child("temperature").child("max").setValueAsync(settings.getMaxTemperature());
+        }
+        if(settings.getAvgTemperature()!=null) {
+            database.child("temperature").child("avg").setValueAsync(settings.getAvgTemperature());
+        }
+        if(settings.getMinTemperature()!=null) {
+            database.child("temperature").child("min").setValueAsync(settings.getMinTemperature());
+        }
+        if(settings.getAvgSoilMoisture()!=null) {
+            database.child("soil_moisture").child("avg").setValueAsync(settings.getAvgSoilMoisture());
+        }
+        if(settings.getMinSoilMoisture()!=null) {
+            database.child("soil_moisture").child("min").setValueAsync(settings.getMinSoilMoisture());
+        }
+        if(settings.getStartTime()!=null) {
+            database.child("time").child("start").setValueAsync(settings.getStartTime());
+        }
+        if(settings.getStopTime()!=null) {
+            database.child("time").child("stop").setValueAsync(settings.getStopTime());
+        }
+        if(settings.getMode()!=null) {
+            database.child("mode").setValueAsync(settings.getMode());
+        }
+        if(settings.getSecurity()!=null) {
+            database.child("security").setValueAsync(settings.getSecurity());
+        }
 
     }
 
