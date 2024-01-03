@@ -61,10 +61,10 @@ public class Firebase {
         if(settings.getMinSoilMoisture()!=null) {
             database.child("soil_moisture").child("min").setValueAsync(settings.getMinSoilMoisture());
         }
-        if(settings.getStartTime()!=null) {
+        if(settings.getStartTime()!="") {
             database.child("time").child("start").setValueAsync(settings.getStartTime());
         }
-        if(settings.getStopTime()!=null) {
+        if(settings.getStopTime()!="") {
             database.child("time").child("stop").setValueAsync(settings.getStopTime());
         }
         if(settings.getMode()!=null) {
