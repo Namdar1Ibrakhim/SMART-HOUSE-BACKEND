@@ -2,10 +2,7 @@ package com.example.smarthousebackend.utils;
 
 import com.example.smarthousebackend.entity.SmartHouse;
 import com.example.smarthousebackend.entity.SmartHouseList;
-import com.example.smarthousebackend.repository.RelayRepository;
-import com.example.smarthousebackend.repository.SmartHouseListRepository;
-import com.example.smarthousebackend.repository.SmartHouseRepository;
-import com.example.smarthousebackend.repository.SoilListRepository;
+import com.example.smarthousebackend.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,7 +18,7 @@ public class SmartHouseListener {
     private final SmartHouseListRepository smartHouseListRepository;
     private final SmartHouseRepository smartHouseRepository;
     private final SoilListRepository soilListRepository;
-    private final RelayRepository relayRepository;
+    private final RelayListRepository relayListRepository;
 
     @Scheduled(fixedRate = 20000)
     public void postUpdate() {
@@ -53,7 +50,7 @@ public class SmartHouseListener {
             // Добавим условие для удаления старых данных, если их количество превышает 1000
             long smartHouseRowCount = smartHouseListRepository.count();
             long soilRowCount = soilListRepository.count();
-            long relayRowCount = relayRepository.count();
+            long relayRowCount = relayListRepository.count();
             int maxRowCount = 1000;
 
             if (smartHouseRowCount > maxRowCount) {
@@ -74,7 +71,7 @@ public class SmartHouseListener {
 
                 // Удаляем старые записи
                 log.info("**********************************");
-                relayRepository.deleteOldestRecords(deleteCount);
+                relayListRepository.deleteOldestRecords(deleteCount);
             }
 
 

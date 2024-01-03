@@ -1,22 +1,13 @@
-package com.example.smarthousebackend.entity;
+package com.example.smarthousebackend.dto;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "relay")
-public class Relay{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class RelayListDto {
 
     private Integer switch1;
 

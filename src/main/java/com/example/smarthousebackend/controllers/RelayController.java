@@ -1,6 +1,7 @@
 package com.example.smarthousebackend.controllers;
 
 import com.example.smarthousebackend.dto.RelayDto;
+import com.example.smarthousebackend.dto.RelayListDto;
 import com.example.smarthousebackend.service.RelayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ public class RelayController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<RelayDto>> getAll(){
+    public ResponseEntity<List<RelayListDto>> getAll(){
         return ResponseEntity.ok(relayService.getAll());
     }
 

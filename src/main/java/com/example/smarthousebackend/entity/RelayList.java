@@ -11,8 +11,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "relay")
-public class Relay{
+@Table(name = "relayList")
+public class RelayList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

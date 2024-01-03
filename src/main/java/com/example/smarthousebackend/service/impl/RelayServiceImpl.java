@@ -1,9 +1,13 @@
 package com.example.smarthousebackend.service.impl;
 
 import com.example.smarthousebackend.dto.RelayDto;
+import com.example.smarthousebackend.dto.RelayListDto;
 import com.example.smarthousebackend.entity.Relay;
+import com.example.smarthousebackend.entity.RelayList;
+import com.example.smarthousebackend.mapper.RelayListMapper;
 import com.example.smarthousebackend.mapper.RelayMapper;
 import com.example.smarthousebackend.repository.Firebase;
+import com.example.smarthousebackend.repository.RelayListRepository;
 import com.example.smarthousebackend.repository.RelayRepository;
 import com.example.smarthousebackend.service.RelayService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +25,11 @@ public class RelayServiceImpl implements RelayService {
 
     private final Firebase firebase;
     private final RelayRepository relayRepository;
+    private final RelayListRepository relayListRepository;
+    private final RelayListMapper relayListMapper;
     private final RelayMapper relayMapper;
+
+
 
     @Override
     public void clickButton(Integer device, Integer val) {
@@ -60,8 +68,8 @@ public class RelayServiceImpl implements RelayService {
 
     @Override
     public RelayDto getValue() throws ExecutionException, InterruptedException {
-        CompletableFuture<RelayDto> relayDto = firebase.getRelayValue();
-        return relayDto.get();
+        Relay relay = relayRepository.findById(1).get();
+        return relayMapper.toDto(relay);
     }
 
     @Override
@@ -70,8 +78,8 @@ public class RelayServiceImpl implements RelayService {
     }
 
     @Override
-    public List<RelayDto> getAll() {
-        List<Relay> relayList = relayRepository.findAll();
-        return relayMapper.toDtoList(relayList);
+    public List<RelayListDto> getAll() {
+        List<RelayList> relayList = relayListRepository.findAll();
+        return relayListMapper.toDtoList(relayList);
     }
 }

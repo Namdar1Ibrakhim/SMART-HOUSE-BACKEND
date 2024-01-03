@@ -29,6 +29,7 @@ public class Firebase {
     private final SmartHouseRepository smartHouseRepository;
     private final RelayMapper relayMapper;
     private final RelayRepository relayRepository;
+    private final RelayListRepository relayListRepository;
     private final SoilService soilService;
     private final MailService mailService;
     private final UserRepository userRepository;
@@ -36,6 +37,7 @@ public class Firebase {
     private final SoilListRepository soilListRepository;
 
     public void editSettings(SettingsDto settings){
+        log.info("Start editing");
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("Settings");
         if(settings.getMaxHumidity()!=null) {
             database.child("humidity").child("max").setValueAsync(settings.getMaxHumidity());
@@ -73,7 +75,7 @@ public class Firebase {
         if(settings.getSecurity()!=null) {
             database.child("security").setValueAsync(settings.getSecurity());
         }
-
+        log.info("Edited");
     }
 
     @Async
@@ -99,6 +101,7 @@ public class Firebase {
 
 
                 Relay relay = Relay.builder()
+                        .id(1)
                         .switch1(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("0").getValue(Integer.class))
                         .switch2(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("1").getValue(Integer.class))
                         .switch3(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("2").getValue(Integer.class))
@@ -109,10 +112,30 @@ public class Firebase {
                         .pump(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("7").getValue(Integer.class))
                         .heating(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("8").getValue(Integer.class))
                         .mode(dataSnapshot.child("Settings").child("mode").getValue(Integer.class))
+                        .security(dataSnapshot.child("Settings").child("security").getValue(Integer.class))
                         .localDate(new Date())
                         .build();
 
                 relayRepository.save(relay);
+
+
+                RelayList relayList = RelayList.builder()
+                        .switch1(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("0").getValue(Integer.class))
+                        .switch2(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("1").getValue(Integer.class))
+                        .switch3(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("2").getValue(Integer.class))
+                        .switch4(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("3").getValue(Integer.class))
+                        .humidifier(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("4").getValue(Integer.class))
+                        .alarm(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("5").getValue(Integer.class))
+                        .airflow(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("6").getValue(Integer.class))
+                        .pump(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("7").getValue(Integer.class))
+                        .heating(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("8").getValue(Integer.class))
+                        .mode(dataSnapshot.child("Settings").child("mode").getValue(Integer.class))
+                        .security(dataSnapshot.child("Settings").child("security").getValue(Integer.class))
+                        .localDate(new Date())
+                        .build();
+
+                relayListRepository.save(relayList);
+
 
 
                 SettingsDto settingsDto = SettingsDto.builder()
@@ -318,7 +341,7 @@ public class Firebase {
                         .pump(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("7").getValue(Integer.class))
                         .heating(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("8").getValue(Integer.class))
                         .mode(dataSnapshot.child("Settings").child("mode").getValue(Integer.class))
-                        .security(dataSnapshot.child("Settings").child("security").getValue(Integer.class))
+                        .security(dataSnapshot.child("Settings").child("mode").getValue(Integer.class))
                         .localDate(new Date())
                         .build();
                 future.complete(relayDto);
