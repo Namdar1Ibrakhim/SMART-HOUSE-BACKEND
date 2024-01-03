@@ -318,6 +318,7 @@ public class Firebase {
                         .pump(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("7").getValue(Integer.class))
                         .heating(dataSnapshot.child("Master-1").child("Relay").child("08:B6:1F:C1:8D:28").child("8").getValue(Integer.class))
                         .mode(dataSnapshot.child("Settings").child("mode").getValue(Integer.class))
+                        .security(dataSnapshot.child("Settings").child("security").getValue(Integer.class))
                         .localDate(new Date())
                         .build();
                 future.complete(relayDto);

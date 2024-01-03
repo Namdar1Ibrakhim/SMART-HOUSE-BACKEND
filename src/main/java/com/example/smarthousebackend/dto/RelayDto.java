@@ -31,4 +31,6 @@ public class RelayDto {
     private Date localDate;
 
     private Integer mode;
+
+    private Integer security;
 }
