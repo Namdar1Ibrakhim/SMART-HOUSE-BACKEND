@@ -43,26 +43,12 @@ public class JwtService {
     public String genarateAccessToken(UserDetails userDetails){
         return generateAccessToken(new HashMap<>(), userDetails);
     }
-    public String genarateRefreshToken(UserDetails userDetails){
-        return generateRefreshToken(new HashMap<>(), userDetails);
-    }
-    public String generateRefreshToken(
-            Map<String, Object> extractClaims,
-            UserDetails userDetails
-    ){
-        return Jwts.builder()
-                .setClaims(extractClaims)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+expiration_time_refresh))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-                .compact();
-    }
 
     public String generateAccessToken(
             Map<String, Object> extractClaims,
             UserDetails userDetails
     ){
+        System.out.println("***********" + new Date(System.currentTimeMillis()+expiration_time_access));
         return Jwts.builder()
                 .setClaims(extractClaims)
                 .setSubject(userDetails.getUsername())

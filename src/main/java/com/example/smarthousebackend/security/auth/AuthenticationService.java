@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -51,14 +53,11 @@ public class AuthenticationService {
 
         var savedUser = repository.save(user);
         var jwtAccessToken = jwtService.genarateAccessToken(user);
-        var jwtRefreshToken = jwtService.genarateRefreshToken(user);
 
 
         saveUserToken(savedUser, jwtAccessToken);
-        saveUserToken(savedUser, jwtRefreshToken);
         return AuthenticationResponse.builder()
                 .accessToken(jwtAccessToken)
-                .refreshToken(jwtRefreshToken)
                 .build();
     }
 
@@ -69,13 +68,11 @@ public class AuthenticationService {
         );
         var user = repository.findByEmail(request.getEmail()).orElseThrow();
         var jwtAccessToken = jwtService.genarateAccessToken(user);
-        var jwtRefreshToken = jwtService.genarateRefreshToken(user);
 
 
         revokeAllUserTokens(user);
         saveUserToken(user, jwtAccessToken);
-        saveUserToken(user, jwtRefreshToken);
-        return AuthenticationResponse.builder().accessToken(jwtAccessToken).refreshToken(jwtRefreshToken).build();
+        return AuthenticationResponse.builder().accessToken(jwtAccessToken).build();
     }
     private void revokeAllUserTokens(User user){
         var validUserTokens = tokenRepository.findAllValidTokensByUser(user.getId());
@@ -93,6 +90,7 @@ public class AuthenticationService {
                 .user(user)
                 .token(jwtToken)
                 .tokenType(TokenType.BEARER)
+                .createdAt(new Date())
                 .expired(false)
                 .revoked(false)
                 .build();

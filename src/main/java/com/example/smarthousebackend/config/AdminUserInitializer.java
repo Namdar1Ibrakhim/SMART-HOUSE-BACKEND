@@ -20,10 +20,12 @@ public class AdminUserInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if(!userRepository.findByEmail("admin@gmail.com").isPresent()) {
+        if(!userRepository.findByEmail("inzhushakhidani@gmail.com").isPresent()) {
             var adminUser = User.builder()
-                    .email("admin@gmail.com")
-                    .password(passwordEncoder.encode("Adminuser2024"))
+                    .firstname("Inzhu")
+                    .lastname("Shakhidani")
+                    .email("inzhushakhidani@gmail.com")
+                    .password(passwordEncoder.encode("Inzhu&2003"))
                     .role(Role.ADMIN)
                     .build();
             userRepository.save(adminUser);

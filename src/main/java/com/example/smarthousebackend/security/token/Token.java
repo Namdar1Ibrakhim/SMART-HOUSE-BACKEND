@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Data
@@ -28,6 +29,8 @@ public class Token implements Serializable {
     private boolean expired;
 
     private boolean revoked;
+
+    private Date createdAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
