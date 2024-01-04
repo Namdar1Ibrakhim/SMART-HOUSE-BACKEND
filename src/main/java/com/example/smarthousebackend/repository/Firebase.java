@@ -274,23 +274,22 @@ public class Firebase {
             }
 
             if (smartHouse.getDoor() == 1 && settings.getSecurity() == 0) {
-                synchronized (lock) {
-                    if (!doorExecuted) {
-                        log.info("**********DOOOR EXECUTED**********");
-                        doorExecuted = true;
-                        MailStructure mailStructure = new MailStructure();
-                        mailStructure.setSubject("ВТОРЖЕНИЕ!");
-                        mailStructure.setMessage("Кто-то вошел в дом.\nВремя: " + new Date());
+                if (!doorExecuted) {
+                    log.info("**********DOOOR EXECUTED**********");
+                    doorExecuted = true;
+                    MailStructure mailStructure = new MailStructure();
+                    mailStructure.setSubject("ВТОРЖЕНИЕ!");
+                    mailStructure.setMessage("Кто-то вошел в дом.\nВремя: " + new Date());
 
-                        List<User> users = userRepository.findAll();
-                        for (User user : users) {
-                            mailService.sendMail(user.getEmail(), mailStructure);
-                        }
-                        Thread.sleep(2000);
-                        door(0);
-                        alarm(0);
-                        doorExecuted = false;
+                    List<User> users = userRepository.findAll();
+                    for (User user : users) {
+                        mailService.sendMail(user.getEmail(), mailStructure);
                     }
+                    door(0);
+                    alarm(0);
+                    Thread.sleep(10000);
+                    doorExecuted = false;
+
                 }
             } else {
                 alarm(1);
