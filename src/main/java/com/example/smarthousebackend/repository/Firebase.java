@@ -80,7 +80,7 @@ public class Firebase {
     }
 
     @Async
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 3000)
     public void saveHydroponicData(){
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         database.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -210,7 +210,7 @@ public class Firebase {
 
 
     @Async
-    @Scheduled(fixedRate = 2000)
+    @Scheduled(fixedRate = 5000)
     public void saveSoil() {
         log.info("Soil check");
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
@@ -245,7 +245,6 @@ public class Firebase {
             }
         });
     }
-
 
     @Async
     @Scheduled(fixedRate = 1000)
@@ -291,13 +290,11 @@ public class Firebase {
                         door(0);
                         alarm(0);
                         doorExecuted = false;
-
                     }
                 }
             } else {
                 alarm(1);
             }
-
 
             if (smartHouse.getTemperature() <= settings.getMinTemperature()) {
                 heating(0);//Обогреватель вкл
@@ -324,6 +321,7 @@ public class Firebase {
                 humidifier(1);//Увлажнитель выкл
                 log.info("humidifier off");
             }
+
         }
     }
     private boolean doorExecuted = false;

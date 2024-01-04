@@ -17,7 +17,7 @@ spring:
       ddl-auto: update
       id:
         increment: 1
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
