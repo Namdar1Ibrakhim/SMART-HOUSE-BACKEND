@@ -27,8 +27,8 @@ public class JwtService {
     @Value("${spring.jwt.expiration_time_access}")
     private long expiration_time_access;
 
-    @Value("${spring.jwt.expiration_time_refresh}")
-    private long expiration_time_refresh;
+//    @Value("${spring.jwt.expiration_time_refresh}")
+//    private long expiration_time_refresh;
 
 
     public String extractUsername(String token) {
@@ -48,7 +48,7 @@ public class JwtService {
             Map<String, Object> extractClaims,
             UserDetails userDetails
     ){
-        System.out.println("***********" + new Date(System.currentTimeMillis()+expiration_time_access));
+        System.out.println( new Date(System.currentTimeMillis()) + "***********" + new Date(System.currentTimeMillis()+expiration_time_access));
         return Jwts.builder()
                 .setClaims(extractClaims)
                 .setSubject(userDetails.getUsername())

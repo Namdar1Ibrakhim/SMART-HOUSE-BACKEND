@@ -25,6 +25,7 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 public class Firebase {
 
+    private static final Object lock = new Object();
     private final SmartHouseService smartHouseService;
     private final SmartHouseRepository smartHouseRepository;
     private final RelayMapper relayMapper;
@@ -245,6 +246,7 @@ public class Firebase {
         });
     }
 
+
     @Async
     @Scheduled(fixedRate = 1000)
     public void checkSmartHouse() throws ExecutionException, InterruptedException {
@@ -273,19 +275,24 @@ public class Firebase {
             }
 
             if (smartHouse.getDoor() == 1 && settings.getSecurity() == 0) {
-                door(0);
-                if(!doorExecuted) {
-                    doorExecuted = true;
-                    alarm(0);
-                    MailStructure mailStructure = new MailStructure();
-                    mailStructure.setSubject("ПРОНИКНОВЕНИЕ!");
-                    mailStructure.setMessage("Кто-то вошел в дом.\nВремя: " + new Date());
+                synchronized (lock) {
+                    if (!doorExecuted) {
+                        log.info("**********DOOOR EXECUTED**********");
+                        doorExecuted = true;
+                        MailStructure mailStructure = new MailStructure();
+                        mailStructure.setSubject("ВТОРЖЕНИЕ!");
+                        mailStructure.setMessage("Кто-то вошел в дом.\nВремя: " + new Date());
 
-                    List<User> users = userRepository.findAll();
-                    for (User user : users) {
-                        mailService.sendMail(user.getEmail(), mailStructure);
+                        List<User> users = userRepository.findAll();
+                        for (User user : users) {
+                            mailService.sendMail(user.getEmail(), mailStructure);
+                        }
+                        Thread.sleep(2000);
+                        door(0);
+                        alarm(0);
+                        doorExecuted = false;
+
                     }
-                    doorExecuted = false;
                 }
             } else {
                 alarm(1);
