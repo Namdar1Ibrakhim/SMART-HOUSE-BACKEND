@@ -293,7 +293,9 @@ public class Firebase {
                 }
             } else {
                 alarm(1);
+
             }
+
 
             if (smartHouse.getTemperature() <= settings.getMinTemperature()) {
                 heating(0);//Обогреватель вкл
